@@ -5,6 +5,8 @@ import ImageViewer from './components/ImageViewer';
 import Button from './components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
+import CircleButton from './components/CircleButton';
+import IconButton from './components/IconButton';
 
 export default function App() {
 
@@ -19,12 +21,24 @@ let [selectedImage, setSelectedImage] = useState(null); //variable que va a camb
     });
   if(!result.canceled){
     setSelectedImage(result.assets[0].uri);
-    console.log(result);
     setShowAppOptions(true);
+    // console.log(result);
   } else{
     alert("you did not select any image");
   }
-  }
+  };
+
+   const onReset = () => {
+    setShowAppOptions(false);
+  };
+
+  const onAddSticker = () => {
+    // we will implement this later
+  };
+
+  const onSaveImageAsync = async () => {
+    // we will implement this later
+  };
   
 
   return ( 
@@ -33,15 +47,20 @@ let [selectedImage, setSelectedImage] = useState(null); //variable que va a camb
       <View style={styles.imageContainer}>
       <ImageViewer PlaceholderImage={PlaceholderImage} selectedImage={selectedImage}/>
       </View>
-      {showAppOptions} ? (
-        <View></View>
+      {showAppOptions ? (
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker} />
+            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+          </View>
+        </View>
       ) : (
       <View style={styles.footerContainer}>
         <Button label="Choose a photo" theme={'primary'} onPress={pickImageAsync} />
         <Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
       </View>
-
-      )
+      )}
       {/* <Image source={{uri: 'https://images.unsplash.com/photo-1693742857885-3867bb972e16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2100&q=80'}}></Image> */}
       <StatusBar style="auto" />
     </View>
@@ -63,4 +82,17 @@ const styles = StyleSheet.create({
     flex: 1 / 3,
     alignItems: 'center',
   },
+  optionsContainer: {
+    position: 'absolute',
+    bottom: 80,
+    backgroundColor: '#ADC4CE',
+    paddingHorizontal: 40,
+    paddingVertical: 20,
+    borderRadius: 20
+  },
+  optionsRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    
+  }
 });
