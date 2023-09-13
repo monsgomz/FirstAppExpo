@@ -1,3 +1,4 @@
+//Tutorial en https://docs.expo.dev/tutorial/create-your-first-app/
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import ImageViewer from './components/ImageViewer';
@@ -9,6 +10,7 @@ export default function App() {
 
 let [selectedImage, setSelectedImage] = useState(null); //variable que va a cambiar de imagen
   const PlaceholderImage = require('./assets/clouds.jpg');
+  const [showAppOptions, setShowAppOptions] = useState(false); //mostrar u ocultar los botones
 
   const pickImageAsync = async() => {
     let result = await ImagePicker.launchImageLibraryAsync({
